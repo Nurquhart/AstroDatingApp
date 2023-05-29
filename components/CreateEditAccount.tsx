@@ -3,7 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
 
-const CreateEditAccount = () => {
+interface CreateEditAccountProps {
+  create: boolean;
+}
+
+const CreateEditAccount = (props: CreateEditAccountProps) => {
+  const {create} = props;
+
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState('');
@@ -14,43 +20,59 @@ const CreateEditAccount = () => {
 
   return (
     <View style={styles.container}>
-      <Button
-        mode="contained"
-        onPress={() => navigate('/')}
-        style={styles.button}>
-        Back
-      </Button>
       <View style={styles.formContainer}>
+        <Text style={styles.cursiveText}>
+          {create ? 'Create Account' : 'Update Account'}
+        </Text>
         <TextInput
+          style={styles.textbox}
           label="First Name"
           value={firstName}
           onChangeText={text => setFirstName(text)}
         />
         <TextInput
+          style={styles.textbox}
           label="Last Name"
           value={lastName}
           onChangeText={text => setLastName(text)}
         />
         <TextInput
+          style={styles.textbox}
           label="Birthday"
           value={birthday}
           onChangeText={text => setBirthday(text)}
         />
         <TextInput
+          style={styles.textbox}
           label="Birth Time"
           value={birthTime}
           onChangeText={text => setBirthTime(text)}
         />
         <TextInput
+          style={styles.textbox}
           label="Birthplace"
           value={birthplace}
           onChangeText={text => setBirthplace(text)}
         />
+        {create ? (
+          <Button
+            mode="contained"
+            onPress={() => navigate('/Profile')}
+            style={styles.button}>
+            Sign up
+          </Button>
+        ) : (
+          <Button
+            mode="contained"
+            onPress={() => navigate('/Profile')}
+            style={styles.button}>
+            Save
+          </Button>
+        )}
         <Button
-          mode="contained"
-          onPress={() => navigate('/HomeTab')}
-          style={styles.button}>
-          Sign up
+          mode="text"
+          onPress={() => (create ? navigate('/') : navigate('/Profile'))}>
+          Back
         </Button>
       </View>
     </View>
@@ -59,17 +81,27 @@ const CreateEditAccount = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    paddingTop: 50,
+    flex: 1,
+    paddingTop: 70,
     paddingLeft: 10,
     paddingRight: 10,
   },
+  textbox: {
+    width: '90%',
+    marginBottom: 10,
+  },
   formContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
-    width: '20%',
+    width: '60%',
+  },
+  cursiveText: {
+    fontFamily: 'Snell Roundhand',
+    fontWeight: 'bold',
+    fontSize: 40,
+    marginBottom: 5,
   },
 });
 

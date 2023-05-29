@@ -3,53 +3,50 @@ import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useNavigate} from 'react-router-native';
+import {useTheme} from 'react-native-paper';
 
 const SignInPage = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const [signIn, setSignIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <View style={styles.background}>
-      <Text
-        style={{
-          fontFamily: 'Snell Roundhand',
-          fontWeight: 'bold',
-          fontSize: 52,
-        }}>
-        In The Stars...
-      </Text>
+    <View
+      style={[styles.background, {backgroundColor: theme.colors.background}]}>
+      <Text style={styles.cursiveText}>In The Stars...</Text>
       {!signIn ? (
         <Fragment>
-          <Button mode="contained" onPress={() => navigate('/CreateAccount')}>
+          <Button
+            style={styles.signUpButton}
+            mode="contained"
+            onPress={() => navigate('/CreateAccount')}>
             Sign Up
           </Button>
-          <Button mode="contained" onPress={() => setSignIn(true)}>
+          <Button
+            style={styles.logInButton}
+            mode="text"
+            onPress={() => setSignIn(true)}>
             Log In
           </Button>
         </Fragment>
       ) : (
         <Fragment>
           <TextInput
-            style={styles.button}
+            style={styles.textbox}
             label="Email"
             value={email}
             onChangeText={text => setEmail(text)}
           />
           <TextInput
-            style={styles.button}
+            style={styles.textbox}
             label="Password"
             value={password}
             onChangeText={text => setPassword(text)}
           />
-          <Button mode="contained" onPress={() => navigate('/HomeTab')}>
+          <Button mode="contained" onPress={() => navigate('/Profile')}>
             Log In
           </Button>
           <Button mode="text" onPress={() => setSignIn(false)}>
@@ -61,17 +58,29 @@ const SignInPage = () => {
   );
 };
 
+export default SignInPage;
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
+  signUpButton: {
+    width: '50%',
+    marginBottom: 10,
+  },
+  logInButton: {
+    width: '30%',
+  },
+  textbox: {
     width: '70%',
+    marginBottom: 10,
+  },
+  cursiveText: {
+    fontFamily: 'Snell Roundhand',
+    fontWeight: 'bold',
+    fontSize: 52,
+    marginBottom: 5,
   },
 });
-
-export default SignInPage;

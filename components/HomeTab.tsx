@@ -1,45 +1,54 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Button, SegmentedButtons, TextInput} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Button} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
 import Matches from './Matches';
 import Profile from './Profile';
 import Swipe from './Swipe';
 
-const HomeTab = () => {
+interface HomeTabProps {
+  initialTab?: 'swipe' | 'matches' | 'profile';
+}
+
+const HomeTab = (props: HomeTabProps) => {
+  const {initialTab} = props;
   const navigate = useNavigate();
-  const [value, setValue] = React.useState('swipe');
+  const [value, setValue] = useState(initialTab ?? 'swipe');
+  const [email, setEmail] = useState('');
 
   return (
     <View style={styles.container}>
-      {value === 'matches' ? <Matches /> : null}
-      {value === 'swipe' ? <Swipe /> : null}
-      {value === 'profile' ? <Profile /> : null}
-      <Button mode="contained" onPress={() => navigate('/')} disabled={false}>
-        Sign out
-      </Button>
-      <SegmentedButtons
-        style={styles.tabs}
-        value={value}
-        onValueChange={setValue}
-        buttons={[
-          {value: 'matches', label: 'Matches'},
-          {value: 'swipe', label: 'Swipe'},
-          {value: 'profile', label: 'Profile'},
-        ]}
-      />
+      <View style={styles.content}>
+        {value === 'matches' ? <Matches /> : null}
+        {value === 'swipe' ? <Swipe /> : null}
+        {value === 'profile' ? <Profile /> : null}
+      </View>
+      <View style={styles.tabbar}>
+        <Button mode="contained" onPress={() => setValue('matches')}>
+          Matches
+        </Button>
+        <Button mode="contained" onPress={() => setValue('swipe')}>
+          Swipe
+        </Button>
+        <Button mode="contained" onPress={() => setValue('profile')}>
+          Profile
+        </Button>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
+  content: {
+    flex: 9,
   },
-  tabs: {
-    position: 'absolute',
-    paddingTop: '200%',
+  tabbar: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  container: {
+    flex: 1,
   },
 });
 
