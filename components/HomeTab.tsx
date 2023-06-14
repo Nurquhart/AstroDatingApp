@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button} from 'react-native-paper';
+import {Button, useTheme} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
 import Matches from './Matches';
 import Profile from './Profile';
@@ -16,14 +16,21 @@ const HomeTab = (props: HomeTabProps) => {
   const [value, setValue] = useState(initialTab ?? 'swipe');
   const [email, setEmail] = useState('');
 
+  const theme = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: theme.colors.surfaceVariant},
+      ]}>
       <View style={styles.content}>
         {value === 'matches' ? <Matches /> : null}
         {value === 'swipe' ? <Swipe /> : null}
         {value === 'profile' ? <Profile /> : null}
       </View>
-      <View style={styles.tabbar}>
+      <View
+        style={[styles.tabbar, {backgroundColor: theme.colors.surfaceVariant}]}>
         <Button mode="contained" onPress={() => setValue('matches')}>
           Matches
         </Button>

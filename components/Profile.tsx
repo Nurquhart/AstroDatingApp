@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Avatar, Button, Text} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
 

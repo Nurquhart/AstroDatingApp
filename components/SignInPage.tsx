@@ -1,7 +1,6 @@
 import React, {Fragment, useState} from 'react';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useNavigate} from 'react-router-native';
 import {useTheme} from 'react-native-paper';
 
